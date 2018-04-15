@@ -1,21 +1,36 @@
 import React from "react";
-import withMouse from "./components/withMouse";
-import measureTime from "./components/measureTime";
-import fetchData from "./components/fetchData";
+import WithMouse from './components/withMouse';
+import MeasureTime from './components/measureTime';
+import FetchData from "./components/fetchData";
+import KeyLogger from "./components/keyLogger";
 
-const App = props => (
-  <div style={{ width: "100%", height: "100vh" }}>
-    <div>Time Passed: {props.secondsPassed}</div>
-    <div>
-      Mouse is at ({props.x}, {props.y})
-    </div>
-    <div>
-      {props.loading && <div>Loading...</div>}
-      {!props.loading && props.data && <div>{JSON.stringify(props.data)}</div>}
-    </div>
+const App = () => (
+  <div>
+      <KeyLogger>{({lastKeystroke, typedText}) => (
+        <div>
+          <WithMouse render={({x, y}) => (
+            <div>
+              <div>
+                Mouse is at ({x}, {y})
+              </div>
+              <MeasureTime increment={1} render={({secondsPassed}) => (
+                <div>
+                  Time Passed: {secondsPassed}
+                </div>
+              )} />
+              <FetchData url="https://swapi.co/api/people/1" render={({loading, data}) => (
+                <div>
+                  {loading && <div>Loading...</div>}
+                  {!loading && data && <div>{JSON.stringify(data)}</div>}
+                </div>
+            )} />
+            </div>
+          )}/>
+          <div>Last key stroke is: <b>{lastKeystroke}</b></div>
+          <div>Typed text is: <b>{typedText}</b></div>
+        </div>
+      )}</KeyLogger>
   </div>
 );
 
-export default fetchData("https://swapi.co/api/people/1")(
-  measureTime(1)(withMouse(App))
-);
+export default App

@@ -1,36 +1,22 @@
 import React from "react";
 
-const fetchData = url => Component => {
-  return class WrappedComponent extends React.Component {
-    constructor(props) {
-      super(props);
+class FetchData extends React.Component {
+ state = {loading: true, data: null};
 
-      this.state = {
-        data: null,
-        loading: true
-      };
-    }
+  componentDidMount() {
+    this.getData();
+  }
 
-    componentDidMount() {
-      this.getData();
-    }
+  getData = async () => {
+    var urlData = await fetch(this.props.url, {});
+    urlData = await urlData.json();
+    this.setState({ data: urlData, loading: false });
+  }
 
-    async getData() {
-      var urlData = await fetch(url, {});
-      urlData = await urlData.json();
-      this.setState({ data: urlData, loading: false });
-    }
+  render() {
+    const {loading, data} = this.state;
+    return this.props.render({loading, data});
+  }
+}
 
-    render() {
-      return (
-        <Component
-          {...this.props}
-          data={this.state.data}
-          loading={this.state.loading}
-        />
-      );
-    }
-  };
-};
-
-export default fetchData;
+export default FetchData;
