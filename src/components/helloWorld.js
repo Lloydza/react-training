@@ -4,13 +4,13 @@ import ThemeContext from '../store/theme';
 class HelloWorld extends React.Component {
   state = { x: "123" };
 
-  renderAll(context, state) {
+  renderAll = (context) => {
     return <div>
               <div>
                 {JSON.stringify(context) }
               </div>
               <div>
-                {JSON.stringify(state) }
+                {JSON.stringify(this.state) }
               </div>
            </div>;
   }
@@ -19,7 +19,7 @@ class HelloWorld extends React.Component {
     return (
       <div>
         <ThemeContext.Consumer>
-          {(context) => { return this.renderAll(context, this.state)}}
+          {(context) => { return this.renderAll(context)}}
         </ThemeContext.Consumer>
       </div>
     );
