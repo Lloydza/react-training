@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formValues } from 'redux-form';
+import { getFormValues, change  } from 'redux-form';
 
 import ContactForm from '../../forms/contactForm/index'
 
@@ -17,12 +17,15 @@ class Other extends Component {
   }
 
   submitContactForm = (values) => {
-    // console.log(values);
+    console.log(values);
+  }
 
-    let x = {};
-    const ItemList = formValues('contactForm')(x);
-    console.log(ItemList);
-    console.log(x);
+  viewContactFormValuesOutsideTheForm = () => {
+    console.log(this.props.contactForm);
+  }
+
+  updateContactFormFirstNameOutsideTheForm = () => {
+    this.props.updateContactFormField('firstName', 'blah blah blah');
   }
 
   render() {
@@ -33,8 +36,12 @@ class Other extends Component {
         </div>
         <div>
           <ContactForm onSubmit={this.submitContactForm} />
+          <div>
+          <div className="button" onClick={this.viewContactFormValuesOutsideTheForm}>Get Form Values</div>
+          <div className="button" onClick={this.updateContactFormFirstNameOutsideTheForm}>Update First Name</div>
+          </div>
         </div>
-        <div className="button" onClick={this.handleChangeRoute}>Go to the home page.</div>
+        <div className="button" onClick={this.handleChangeRoute}>Go to the home page</div>
       </div>
     );
   }
@@ -42,11 +49,15 @@ class Other extends Component {
 
 var mapStateToProps = function(state) {
   return {
+    contactForm: getFormValues('contact')(state)
   }
 };
 
 var mapDispatchToProps = (dispatch) => {
   return {
+    updateContactFormField: (field, value) => {
+      dispatch(change('contact', field, value));
+    },
     onchangeRoute: (route) => {
       dispatch(changeRoute(route));
     }

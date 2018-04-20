@@ -19,7 +19,7 @@ class Home extends Component {
         <div>
           <h1>This is the Home Page.</h1>
         </div>
-        <div className="button" onClick={this.handleChangeRoute}>Go to the other page.</div>
+        <div className="button" onClick={this.handleChangeRoute}>Go to the other page</div>
       </div>
     );
   }

@@ -56,4 +56,4 @@ let ContactForm = props => {
          </form>;
 }
 
-export default reduxForm({ form: 'contact', validate, warn })(ContactForm);
+export default reduxForm({ form: 'contact', destroyOnUnmount: false, validate, warn })(ContactForm);
