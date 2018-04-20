@@ -1,4 +1,4 @@
-This project outlines a simple React Context example.
+This project outlines a simple Redux Form example.
 
 ## To Run:
 1. yarn/npm install
