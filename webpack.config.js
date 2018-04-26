@@ -1,11 +1,12 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     'babel-polyfill',
-    'react-hot-loader/patch',
     './src/index.js'
   ],
+
   module: {
     rules: [
       {
@@ -15,19 +16,28 @@ module.exports = {
       }
     ]
   },
+
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
+
   devServer: {
-    contentBase: './dist',
-    hot: true
-  }
+    contentBase: './dist'
+  },
+
+  plugins: [
+    new webpack.HashedModuleIdsPlugin(),
+    new HtmlWebpackPlugin({
+        template: __dirname + '/dist/index.html',
+        filename: 'index.html',
+        inject: 'body',
+      }),
+  ]
 };

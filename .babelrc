@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "react-loadable/babel"
+  ],
   "presets": [
     "env",
     "react",

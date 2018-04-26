@@ -1,4 +1,4 @@
-This project outlines a simple Render Props example.
+This project outlines a simple React Router with Partial Loading example.
 
 ## To Run:
 1. yarn/npm install
